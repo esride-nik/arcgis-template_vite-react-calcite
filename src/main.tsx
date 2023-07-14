@@ -15,13 +15,11 @@ const webScene = new WebScene({
 });
 
 const container = document.getElementById('root');
-if (container !== null) {
-  const root = createRoot(container);
-  root.render(
-    <React.StrictMode>
-      <AppStateProvider>
-        <SceneProvider map={webScene}>{<App />}</SceneProvider>
-      </AppStateProvider>
-    </React.StrictMode>
-  );
-}
+const root = createRoot(container!);
+root.render(
+  <React.StrictMode>
+    <AppStateProvider>
+      <SceneProvider map={webScene}>{<App />}</SceneProvider>
+    </AppStateProvider>
+  </React.StrictMode>
+);
