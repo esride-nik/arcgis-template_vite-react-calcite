@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import AppStateProvider from './App/AppState';
 import './global.css';
@@ -14,11 +14,14 @@ const webScene = new WebScene({
   }
 });
 
-ReactDOM.render(
-  <React.StrictMode>
-    <AppStateProvider>
-      <SceneProvider map={webScene}>{<App />}</SceneProvider>
-    </AppStateProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const container = document.getElementById('root');
+if (container !== null) {
+  const root = createRoot(container);
+  root.render(
+    <React.StrictMode>
+      <AppStateProvider>
+        <SceneProvider map={webScene}>{<App />}</SceneProvider>
+      </AppStateProvider>
+    </React.StrictMode>
+  );
+}
