@@ -1,5 +1,4 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import AppStateProvider from './App/AppState';
 import './global.css';
@@ -10,6 +9,7 @@ import WebMap from '@arcgis/core/WebMap';
 import SceneProvider from './Scene/SceneProvider';
 import MapProvider from './Map/MapProvider';
 import MapApp from './App/MapApp';
+import ReactDOM from 'react-dom';
 
 const webScene = new WebScene({
   portalItem: {
