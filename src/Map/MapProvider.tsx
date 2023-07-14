@@ -1,16 +1,16 @@
 import { createContext, useContext, useReducer } from 'react';
 
-import SceneView from '@arcgis/core/views/SceneView';
+import MapView from '@arcgis/core/views/MapView';
 import Map from '@arcgis/core/Map';
 import WebScene from '@arcgis/core/WebScene';
 import WebMap from '@arcgis/core/WebMap';
 
-interface SceneProviderProps {
+interface MapProviderProps {
   map?: Map | __esri.MapProperties;
 }
 
 type BaseContextState = {
-  view?: SceneView | null;
+  view?: MapView | null;
 };
 
 type MapContextState = BaseContextState & {
@@ -18,30 +18,25 @@ type MapContextState = BaseContextState & {
   map: Map;
 };
 
-type WebSceneContextState = BaseContextState & {
-  type: 'esri.WebScene';
-  map: WebScene;
-};
-
 type WebMapContextState = BaseContextState & {
   type: 'esri.WebMap';
   map: WebMap;
 };
 
-type ContextState = MapContextState | WebSceneContextState | WebMapContextState;
+type ContextState = MapContextState | WebMapContextState;
 
-type Action = { type: 'INITIALIZE'; view: SceneView } | { type: 'DESTROY' };
+type Action = { type: 'INITIALIZE'; view: MapView } | { type: 'DESTROY' };
 
 type Dispatch = (action: Action) => void;
 
-type SceneContext = {
+type MapContext = {
   state: ContextState;
   dispatch: Dispatch;
 };
 
 type TypedSceneContext<G extends Map> = {
   state: {
-    view?: SceneView;
+    view?: MapView;
     map: G;
   };
   dispatch: Dispatch;
@@ -63,24 +58,19 @@ const reducer = (state: ContextState, action: Action): ContextState => {
   }
 };
 
-const SceneContext = createContext<SceneContext | undefined>(undefined);
+const MapContext = createContext<MapContext | undefined>(undefined);
 
-const defaultProps: SceneProviderProps = {
+const defaultProps: MapProviderProps = {
   map: {
     basemap: 'satellite',
     ground: 'world-elevation'
   }
 };
 
-const createInitialContext = (props: SceneProviderProps): ContextState => {
+const createInitialContext = (props: MapProviderProps): ContextState => {
   const map = props.map;
 
-  if (map instanceof WebScene && map.declaredClass === 'esri.WebScene') {
-    return {
-      type: map.declaredClass,
-      map: map
-    };
-  } else if (map instanceof WebMap && map.declaredClass === 'esri.WebMap') {
+  if (map instanceof WebMap && map.declaredClass === 'esri.WebMap') {
     return {
       type: map.declaredClass,
       map: map
@@ -102,32 +92,22 @@ const createInitialContext = (props: SceneProviderProps): ContextState => {
   }
 };
 
-const SceneProvider: React.FC<SceneProviderProps> = (props) => {
+const MapProvider: React.FC<MapProviderProps> = (props) => {
   const [state, dispatch] = useReducer(reducer, createInitialContext(props));
   const value = { state, dispatch };
-  return <SceneContext.Provider value={value}>{props.children}</SceneContext.Provider>;
+  return <MapContext.Provider value={value}>{props.children}</MapContext.Provider>;
 };
 
-function useScene() {
-  const context = useContext(SceneContext);
+function useMap() {
+  const context = useContext(MapContext);
   if (context === undefined) {
-    throw new Error('useScene must be used within a SceneProvider');
+    throw new Error('useMap must be used within a MapProvider');
   }
   return context;
 }
 
-function useWebScene() {
-  const scene = useScene();
-  const { state } = scene;
-  if (state.type !== 'esri.WebScene') {
-    throw new Error('useScene must be used within a SceneProvider with map being a WebScene');
-  }
-
-  return scene as TypedSceneContext<WebScene>;
-}
-
 function useWebMap() {
-  const scene = useScene();
+  const scene = useMap();
   const { state } = scene;
   if (state.type !== 'esri.WebMap') {
     throw new Error('useScene must be used within a SceneProvider with map being a WebScene');
@@ -136,5 +116,5 @@ function useWebMap() {
   return scene as TypedSceneContext<WebMap>;
 }
 
-export default SceneProvider;
-export { SceneContext, useScene, useWebScene, useWebMap };
+export default MapProvider;
+export { MapContext as SceneContext, useMap, useWebMap };
