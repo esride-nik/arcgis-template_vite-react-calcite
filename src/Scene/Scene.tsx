@@ -3,12 +3,14 @@ import { useEffect, useRef } from 'react';
 
 import * as styles from './Scene.module.css';
 import { useScene } from './SceneProvider';
+// import { useAppState } from '../App/AppState';
 
 interface SceneProps {
   view?: __esri.SceneViewProperties;
 }
 
 export function Scene(props: SceneProps) {
+  // const { state: appState } = useAppState();
   const viewDiv = useRef(null);
 
   const { state, dispatch } = useScene();
@@ -19,6 +21,14 @@ export function Scene(props: SceneProps) {
       map: state.map,
       ...props.view
     });
+    view.when((v: SceneView) => {
+      let watchHandle = v.watch("stationary", (s: boolean) => {
+        if (s) {
+          state.center = v.center;
+        }
+      });
+    })
+
     dispatch({ type: 'INITIALIZE', view });
 
     return () => {

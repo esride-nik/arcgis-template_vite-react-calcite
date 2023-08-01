@@ -4,14 +4,15 @@ import MapView from '@arcgis/core/views/MapView';
 import Map from '@arcgis/core/Map';
 import WebScene from '@arcgis/core/WebScene';
 import WebMap from '@arcgis/core/WebMap';
+import { BaseContextState } from '../Scene/SceneProvider';
 
 interface MapProviderProps {
   map?: Map | __esri.MapProperties;
 }
 
-type BaseContextState = {
-  view?: MapView | null;
-};
+// type BaseContextState = {
+//   view?: MapView | null;
+// };
 
 type MapContextState = BaseContextState & {
   type: 'esri.Map';

@@ -9,8 +9,9 @@ interface SceneProviderProps {
   map?: Map | __esri.MapProperties;
 }
 
-type BaseContextState = {
+export type BaseContextState = {
   view?: SceneView | null;
+  center?: __esri.Point;
 };
 
 type MapContextState = BaseContextState & {

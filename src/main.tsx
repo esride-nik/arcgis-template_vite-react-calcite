@@ -19,7 +19,8 @@ const webScene = new WebScene({
 });
 const webMap = new WebMap({
   portalItem: {
-    id: '35300200d40942ca8e7cb0a5be3ed8ce' // rauschgift (2d map)
+    // id: '35300200d40942ca8e7cb0a5be3ed8ce' // rauschgift (2d map)
+    id: 'cf11f7789e7446e8b86da4fcbe2d5d30' // SanFran housing
   }
 });
 
