@@ -12,20 +12,20 @@ import { useAppState } from './AppState';
 console.log('Start App');
 
 export function App() {
-  const { state: map } = useMap();
-  const globeDiv = useRef(null);
-  useEffect(() => {
-    const view = map.view;
-    if (view) {
-      view.ui.add(globeDiv.current!, 'bottom-right');
-    }
-  }, [map]);
+  // const { state: map } = useMap();
+  // const globeDiv = useRef(null);
+  // useEffect(() => {
+  //   const view = map.view;
+  //   if (view) {
+  //     view.ui.add(globeDiv.current!, 'bottom-right');
+  //   }
+  // }, [map]);
 
-  const { state: appState } = useAppState();
+  // const { state: appState } = useAppState();
 
   return (
     <>
-      <div className={styles.app}>
+      <div id='mapNode' className={styles.app}>
         <div className={styles.slides}>
           {/* <Slides></Slides> */}
         </div>

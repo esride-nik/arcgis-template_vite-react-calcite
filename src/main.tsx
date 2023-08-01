@@ -26,8 +26,8 @@ const webMap = new WebMap({
 ReactDOM.render(
   <React.StrictMode>
     <AppStateProvider>
-      {/* <SceneProvider map={webScene}>{<App />}</SceneProvider> */}
-      <MapProvider map={webMap}>{<MapApp />}</MapProvider>
+      <SceneProvider id="sceneNode" map={webScene}>{<App />}</SceneProvider>
+      <MapProvider id="mapNode" map={webMap}>{<MapApp />}</MapProvider>
     </AppStateProvider>
   </React.StrictMode>,
   document.getElementById('root')

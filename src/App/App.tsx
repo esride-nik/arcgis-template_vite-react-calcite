@@ -30,7 +30,7 @@ export function App() {
 
   return (
     <>
-      <div className={styles.app}>
+      <div id='sceneNode' className={styles.app}>
         <div className={styles.slides}>
           <Slides></Slides>
         </div>
