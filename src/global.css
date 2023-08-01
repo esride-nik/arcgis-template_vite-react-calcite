@@ -9,11 +9,11 @@ body,
 
 #sceneNode {
   width: 50%;
+  position: absolute;
+  top: 0px;
+  left: 50%;
 }
 
 #mapNode {
   width: 50%;
-  position: absolute;
-  top: 0px;
-  left: 50%;
 }

@@ -26,9 +26,9 @@ export function App() {
   return (
     <>
       <div id='mapNode' className={styles.app}>
-        <div className={styles.slides}>
-          {/* <Slides></Slides> */}
-        </div>
+        {/* <div className={styles.slides}>
+          <Slides></Slides>
+        </div> */}
         <div className={styles.scene}>
           <Map></Map>
         </div>
